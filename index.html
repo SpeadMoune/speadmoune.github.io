@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Симеон Гупало — Копирайтер и Контент-менеджер</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a1a1a;
+            --secondary: #666666;
+            --accent: #2563eb;
+            --bg: #ffffff;
+            --border: #e5e5e5;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+            line-height: 1.7;
+            color: var(--primary);
+            background: var(--bg);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            padding: 80px 0 60px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 48px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            line-height: 1.1;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: var(--secondary);
+            margin-bottom: 40px;
+        }
+
+        /* Bio */
+        .bio {
+            padding: 60px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .bio p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--primary);
+            max-width: 680px;
+        }
+
+        /* Skills */
+        .skills {
+            padding: 60px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-title {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--secondary);
+            margin-bottom: 24px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 32px;
+        }
+
+        .skill-category h3 {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .skill-category ul {
+            list-style: none;
+        }
+
+        .skill-category li {
+            font-size: 15px;
+            color: var(--secondary);
+            padding: 4px 0;
+        }
+
+        /* Portfolio */
+        .portfolio {
+            padding: 60px 0;
+        }
+
+        .featured-works {
+            margin-bottom: 80px;
+        }
+
+        .work-item {
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .work-item:hover {
+            padding-left: 16px;
+        }
+
+        .work-item:last-child {
+            border-bottom: none;
+        }
+
+        .work-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 13px;
+            color: var(--secondary);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .work-type {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .work-title {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 1.4;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .work-media {
+            font-size: 14px;
+            color: var(--secondary);
+        }
+
+        /* Work Categories */
+        .work-categories {
+            display: grid;
+            gap: 48px;
+        }
+
+        .category {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .category:nth-child(1) { animation-delay: 0.1s; }
+        .category:nth-child(2) { animation-delay: 0.2s; }
+        .category:nth-child(3) { animation-delay: 0.3s; }
+        .category:nth-child(4) { animation-delay: 0.4s; }
+
+        .category h3 {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 24px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .category-works {
+            display: grid;
+            gap: 24px;
+        }
+
+        .category-item {
+            padding: 20px;
+            background: #fafafa;
+            border-left: 3px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .category-item:hover {
+            background: #f5f5f5;
+            transform: translateX(8px);
+        }
+
+        .category-item-title {
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .category-item-meta {
+            font-size: 13px;
+            color: var(--secondary);
+        }
+
+        /* Contact */
+        .contact {
+            padding: 60px 0 80px;
+            border-top: 1px solid var(--border);
+        }
+
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .contact-link {
+            font-size: 16px;
+            color: var(--primary);
+            text-decoration: none;
+            padding: 12px 24px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            background: var(--primary);
+            color: var(--bg);
+            border-color: var(--primary);
+        }
+
+        /* Instructions */
+        .edit-instructions {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 40px 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .edit-instructions h4 {
+            margin-bottom: 12px;
+            color: #856404;
+        }
+
+        .edit-instructions ul {
+            margin-left: 20px;
+        }
+
+        .edit-instructions li {
+            margin: 8px 0;
+            color: #856404;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+
+            .subtitle {
+                font-size: 18px;
+            }
+
+            .bio p {
+                font-size: 16px;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-links {
+                flex-direction: column;
+            }
+
+            .work-item:hover {
+                padding-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>Симеон Гупало</h1>
+            <div class="subtitle">Копирайтер и контент-менеджер</div>
+        </header>
+
+        <!-- Bio -->
+        <section class="bio">
+            <div class="section-title">О себе</div>
+            <p>
+                Копирайтер и контент-менеджер с более чем 5-летним опытом работы в IT-сфере. 
+                Специализируюсь на создании технического контента в областях облачной инфраструктуры, 
+                GPU-решений и кибербезопасности. Работал в ITGLOBAL.COM и StormWall, 
+                создавая пресс-релизы, статьи, кейсы и экспертные материалы. 
+                Пишу на русском и английском языках (уровень C1).
+            </p>
+        </section>
+
+        <!-- Skills -->
+        <section class="skills">
+            <div class="section-title">Экспертиза</div>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Форматы контента</h3>
+                    <ul>
+                        <li>Технические статьи</li>
+                        <li>Пресс-релизы</li>
+                        <li>Кейсы и интервью</li>
+                        <li>Блог-посты</li>
+                        <li>Лендинги</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>Тематическая экспертиза</h3>
+                    <ul>
+                        <li>Облачная инфраструктура</li>
+                        <li>GPU и AI-решения</li>
+                        <li>Кибербезопасность</li>
+                        <li>ITSM и автоматизация</li>
+                        <li>Корпоративное ПО</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>Навыки</h3>
+                    <ul>
+                        <li>SEO-копирайтинг</li>
+                        <li>Редактура и корректура</li>
+                        <li>B2B-коммуникации</li>
+                        <li>Контент-стратегия</li>
+                        <li>Работа с SMM</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio -->
+        <section class="portfolio">
+            <div class="section-title">Избранные работы</div>
+            
+            <div class="featured-works">
+                <!-- Article 1 -->
+                <a href="https://itglobal.com/ru-ru/company/blog/rejting-i-sravnenie-service-desk-sistem-kak-vybrat-itsm-dlya-biznesa-v-rossii/" target="_blank" class="work-item">
+                    <div class="work-meta">
+                        <span class="work-type">Статья</span>
+                        <span>2025</span>
+                    </div>
+                    <div class="work-title">Рейтинг и сравнение Service Desk систем: как выбрать ITSM для бизнеса в России</div>
+                    <div class="work-media">ITGLOBAL.COM Blog</div>
+                </a>
+
+                <!-- Article 2 -->
+                <a href="https://itglobal.com/ru-ru/company/blog/obzor-sophgo-sc7-hp75-tpu-na-baze-arm-dlya-ii-s-uklonom-na-raspoznavanie-obrazov/" target="_blank" class="work-item">
+                    <div class="work-meta">
+                        <span class="work-type">Обзор</span>
+                        <span>2025</span>
+                    </div>
+                    <div class="work-title">Обзор Sophgo SC7-HP75: TPU на базе ARM для ИИ с уклоном на распознавание образов</div>
+                    <div class="work-media">ITGLOBAL.COM Blog</div>
+                </a>
+
+                <!-- Article 3 -->
+                <a href="https://stormwall.pro/resources/blog/izvestnye-hakerskie-gruppirovki" target="_blank" class="work-item">
+                    <div class="work-meta">
+                        <span class="work-type">Статья</span>
+                        <span>2024</span>
+                    </div>
+                    <div class="work-title">Известные хакерские группировки: как они работают и что им грозит</div>
+                    <div class="work-media">StormWall Blog</div>
+                </a>
+            </div>
+
+            <!-- All works by category -->
+            <div class="work-categories">
+                <!-- Articles -->
+                <div class="category">
+                    <h3>Статьи</h3>
+                    <div class="category-works">
+                        <a href="https://itglobal.com/ru-ru/company/blog/chto-takoe-superkompyuter-princzip-raboty-primenenie-i-preimushhestva-arendy/" target="_blank" class="category-item">
+                            <div class="category-item-title">Что такое суперкомпьютер: принцип работы, применение и преимущества аренды</div>
+                            <div class="category-item-meta">2025 • ITGLOBAL.COM Blog</div>
+                        </a>
+                        <a href="https://itglobal.com/ru-ru/company/blog/kogda-vozdushnoe-ohlazhdenie-bolshe-ne-rabotaet-gid-po-zhidkostnomu-ohlazhdeniyu-czod/" target="_blank" class="category-item">
+                            <div class="category-item-title">Когда воздушное охлаждение больше не работает: гид по жидкостному охлаждению ЦОД</div>
+                            <div class="category-item-meta">2025 • ITGLOBAL.COM Blog</div>
+                        </a>
+                        <a href="https://stormwall.pro/resources/blog/ai-v-ddos" target="_blank" class="category-item">
+                            <div class="category-item-title">Автоматизированные DDoS-атаки: как ИИ меняет киберугрозы?</div>
+                            <div class="category-item-meta">2024 • StormWall Blog</div>
+                        </a>
+                        <a href="https://stormwall.pro/resources/blog/oblachnaya-zashchita-ot-ddos-atak" target="_blank" class="category-item">
+                            <div class="category-item-title">Облачная защита от DDoS-атак: за и против</div>
+                            <div class="category-item-meta">2024 • StormWall Blog</div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Press Releases -->
+                <div class="category">
+                    <h3>Пресс-релизы</h3>
+                    <div class="category-works">
+                        <a href="https://www.cnews.ru/news/line/2026-02-26_gpu-infrastruktura_itglobalcom" target="_blank" class="category-item">
+                            <div class="category-item-title">GPU-инфраструктура Itglobal.com ускорила 3D-визуализацию архитектурной студии в 8 раз</div>
+                            <div class="category-item-meta">Февраль 2026 • CNews</div>
+                        </a>
+                        <a href="https://www.cnews.ru/news/line/2025-12-22_oblachnyj_provajder_itglobal" target="_blank" class="category-item">
+                            <div class="category-item-title">Облачный провайдер Itglobal.com увеличил вычислительные мощности GPU в России и Казахстане почти в 3 раза</div>
+                            <div class="category-item-meta">Декабрь 2025 • CNews</div>
+                        </a>
+                        <a href="https://www.cnews.ru/news/line/2025-11-01_itglobalcom_zapustil_platformu" target="_blank" class="category-item">
+                            <div class="category-item-title">ITGlobal.com запустил платформу AI Cloud для интеграции ИИ-сервисов в корпоративные процессы</div>
+                            <div class="category-item-meta">Ноябрь 2025 • CNews</div>
+                        </a>
+                        <a href="https://www.novostiitkanala.ru/news/detail.php?ID=182315" target="_blank" class="category-item">
+                            <div class="category-item-title">ITGLOBAL.COM получила статус Approved Partner NetApp в США</div>
+                            <div class="category-item-meta">Январь 2025 • Новости IT-канала</div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Blogs -->
+                <div class="category">
+                    <h3>Блоги</h3>
+                    <div class="category-works">
+                        <a href="https://habr.com/ru/companies/itglobalcom/articles/966218/" target="_blank" class="category-item">
+                            <div class="category-item-title">Как мы запустили новый высокопроизводительный кластер: от выбора железа до прода</div>
+                            <div class="category-item-meta">Ноябрь 2025 • Habr.com</div>
+                        </a>
+                        <a href="https://habr.com/ru/companies/itglobalcom/articles/939464/" target="_blank" class="category-item">
+                            <div class="category-item-title">AMD RDNA 4 против NVIDIA: новый виток конкуренции</div>
+                            <div class="category-item-meta">Август 2025 • Habr.com</div>
+                        </a>
+                    </div>
+                </div>
+        </section>
+
+        <!-- Contact -->
+        <section class="contact">
+            <div class="section-title">Контакты</div>
+            <div class="contact-links">
+                <a href="mailto:simeon026@gmail.com" class="contact-link">Email</a>
+                <a href="https://t.me/SpeadMoune" class="contact-link">Telegram</a>
+                <a href="https://wa.me/79117913316" class="contact-link">WhatsApp</a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#') {
+                    e.preventDefault();
+                    document.querySelector(href).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add hover effect to work items
+        document.querySelectorAll('.work-item, .category-item').forEach(item => {
+            item.addEventL
