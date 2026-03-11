@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Симеон Гупало — Копирайтер и Контент-менеджер</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --text: #1a1a1a; --muted: #888; --divider: #e0e0e0;
+      --accent: #2563eb; --bg: #fff; --max-w: 900px;
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); font-size: 17px; line-height: 1.65; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 28px; }
+
+    /* ── Language toggle ── */
+    .lang-toggle {
+      position: fixed;
+      top: 24px;
+      right: 28px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      z-index: 100;
+      background: var(--bg);
+      border: 1px solid var(--divider);
+      border-radius: 20px;
+      padding: 5px 12px;
+    }
+    .lang-toggle .lang-active {
+      color: var(--text);
+      cursor: default;
+    }
+    .lang-toggle .lang-sep {
+      color: var(--divider);
+      font-weight: 300;
+    }
+    .lang-toggle .lang-switch {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .lang-toggle .lang-switch:hover {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* ── Header ── */
+    .site-header { padding: 72px 0 40px; }
+    .site-header h1 { font-family: Georgia, 'Times New Roman', serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; letter-spacing: -0.5px; margin-bottom: 10px; }
+    .site-header .tagline { color: var(--muted); font-size: 1rem; }
+
+    /* ── Divider & labels ── */
+    .section-divider { border: none; border-top: 1px solid var(--divider); margin: 48px 0; }
+    .section-label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 28px; font-weight: 500; }
+
+    /* ── About ── */
+    .about-text { font-size: 1.05rem; max-width: 680px; color: #333; }
+
+    /* ── Expertise ── */
+    .expertise-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    @media (max-width: 640px) { .expertise-grid { grid-template-columns: 1fr; gap: 20px; } }
+    .expertise-col h3 { font-size: 1rem; font-weight: 600; margin-bottom: 14px; }
+    .expertise-col ul { list-style: none; }
+    .expertise-col li { color: var(--muted); font-size: 0.95rem; padding: 4px 0; }
+
+    /* ── Featured ── */
+    .featured-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    @media (max-width: 600px) { .featured-grid { grid-template-columns: 1fr; } }
+    .featured-card { border: 1px solid var(--divider); border-radius: 6px; padding: 22px 24px; }
+    .card-type { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+    .card-date { color: var(--muted); font-size: 0.82rem; margin-left: 8px; }
+    .featured-card h3 { font-size: 1rem; font-weight: 700; line-height: 1.4; margin: 7px 0 8px; }
+    .card-source { font-size: 0.82rem; color: var(--muted); }
+
+    /* ── Category sections (articles / press releases) ── */
+    .category-section { margin-bottom: 48px; }
+    .category-section h2 { font-family: Georgia, serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 20px; border-bottom: 1px solid var(--divider); padding-bottom: 12px; }
+
+    .category-works { display: flex; flex-direction: column; }
+    .category-works.collapsed .category-item:nth-child(n+5) { display: none; }
+
+    .category-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 14px 0 14px 16px;
+      border-bottom: 1px solid var(--divider);
+      border-left: 3px solid transparent;
+      gap: 20px;
+      transition: border-color 0.15s;
+    }
+    .category-item:first-child { border-top: 1px solid var(--divider); }
+    .category-item:hover { border-left-color: var(--accent); }
+
+    .item-title { font-size: 0.95rem; font-weight: 500; line-height: 1.4; flex: 1; }
+    .item-meta { font-size: 0.8rem; color: var(--muted); white-space: nowrap; flex-shrink: 0; text-align: right; }
+
+    /* ── Expand button ── */
+    .expand-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 16px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+    .expand-btn:hover { color: var(--text); }
+    .expand-btn .arrow { display: inline-block; transition: transform 0.25s; font-size: 0.7rem; }
+    .expand-btn.expanded .arrow { transform: rotate(180deg); }
+
+    /* ── Contacts ── */
+    .contacts-list { display: flex; gap: 32px; flex-wrap: wrap; }
+    .contact-link { display: inline-flex; align-items: center; gap: 7px; font-size: 0.95rem; border-bottom: 1px solid var(--divider); padding-bottom: 2px; transition: border-color 0.15s; }
+    .contact-link:hover { border-color: var(--text); text-decoration: none; }
+
+    footer { padding: 48px 0 64px; color: var(--muted); font-size: 0.82rem; }
+  </style>
+</head>
+<body>
+
+<!-- Language toggle -->
+<div class="lang-toggle">
+  <span class="lang-active">RU</span>
+  <span class="lang-sep">|</span>
+  <a href="indexeng.html" class="lang-switch">EN</a>
+</div>
+
+<div class="container">
+
+  <header class="site-header">
+    <h1>Симеон Гупало</h1>
+    <p class="tagline">Копирайтер и контент-менеджер</p>
+  </header>
+
+  <hr class="section-divider" />
+
+  <section>
+    <p class="section-label">О себе</p>
+    <p class="about-text">Копирайтер и контент-менеджер с более чем 5-летним опытом работы в IT-сфере. Специализируюсь на создании технического контента в областях облачной инфраструктуры, GPU-решений и кибербезопасности. Работал в ITGLOBAL.COM и StormWall, создавая пресс-релизы, статьи, кейсы и экспертные материалы. Пишу на русском и английском языках (уровень C1).</p>
+  </section>
+
+  <hr class="section-divider" />
+
+  <section>
+    <p class="section-label">Экспертиза</p>
+    <div class="expertise-grid">
+      <div class="expertise-col">
+        <h3>Форматы контента</h3>
+        <ul>
+          <li>Технические статьи</li>
+          <li>Пресс-релизы</li>
+          <li>Кейсы и интервью</li>
+          <li>Блог-посты</li>
+          <li>Лендинги</li>
+        </ul>
+      </div>
+      <div class="expertise-col">
+        <h3>Тематическая экспертиза</h3>
+        <ul>
+          <li>Облачная инфраструктура</li>
+          <li>GPU и AI-решения</li>
+          <li>Кибербезопасность</li>
+          <li>ITSM и автоматизация</li>
+          <li>Корпоративное ПО</li>
+        </ul>
+      </div>
+      <div class="expertise-col">
+        <h3>Навыки</h3>
+        <ul>
+          <li>SEO-копирайтинг</li>
+          <li>Редактура и корректура</li>
+          <li>B2B-коммуникации</li>
+          <li>Контент-стратегия</li>
+          <li>Работа с SMM</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <section>
+    <p class="section-label">Избранные работы</p>
+    <div class="featured-grid">
+      <div class="featured-card">
+        <div><span class="card-type">Пресс-релиз</span><span class="card-date">Февраль 2026</span></div>
+        <h3>GPU-инфраструктура ITGLOBAL.COM ускорила 3D-визуализацию архитектурной студии в 8 раз</h3>
+        <div class="card-source">CNews</div>
+      </div>
+      <div class="featured-card">
+        <div><span class="card-type">Статья</span><span class="card-date">2025</span></div>
+        <h3>Рейтинг и сравнение Service Desk систем: как выбрать ITSM для бизнеса в России</h3>
+        <div class="card-source">ITGLOBAL.COM Blog</div>
+      </div>
+      <div class="featured-card">
+        <div><span class="card-type">Статья</span><span class="card-date">Ноябрь 2025</span></div>
+        <h3>Как мы запустили новый высокопроизводительный кластер: от выбора железа до прода</h3>
+        <div class="card-source">Habr.com</div>
+      </div>
+      <div class="featured-card">
+        <div><span class="card-type">Интервью</span><span class="card-date">2026</span></div>
+        <h3>Олег Арсеньев раскрыл практический подход к международной экспансии в IT</h3>
+        <div class="card-source">Computerra</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <section>
+    <p class="section-label">Публикации</p>
+
+    <!-- Статьи -->
+    <div class="category-section">
+      <h2>Статьи</h2>
+      <div class="category-works collapsed" id="articles-works">
+        <div class="category-item"><span class="item-title">Рейтинг и сравнение Service Desk систем: как выбрать ITSM для бизнеса в России</span><span class="item-meta">2025 &middot; ITGLOBAL.COM Blog</span></div>
+        <div class="category-item"><span class="item-title">Обзор SOPHGO SC7 HP75: TPU на базе ARM для ИИ с уклоном на распознавание образов</span><span class="item-meta">2025 &middot; ITGLOBAL.COM Blog</span></div>
+        <div class="category-item"><span class="item-title">Известные хакерские группировки: как они работают и что им грозит</span><span class="item-meta">2024 &middot; StormWall Blog</span></div>
+        <div class="category-item"><span class="item-title">Что такое суперкомпьютер: принцип работы, применение и преимущества аренды</span><span class="item-meta">2025 &middot; ITGLOBAL.COM Blog</span></div>
+        <div class="category-item"><span class="item-title">Когда воздушное охлаждение больше не работает: гид по жидкостному охлаждению ЦОД</span><span class="item-meta">2025 &middot; ITGLOBAL.COM Blog</span></div>
+        <div class="category-item"><span class="item-title">Автоматизированные DDoS-атаки: как ИИ меняет киберугрозы?</span><span class="item-meta">2024 &middot; StormWall Blog</span></div>
+        <div class="category-item"><span class="item-title">Облачная защита от DDoS-атак: за и против</span><span class="item-meta">2024 &middot; StormWall Blog</span></div>
+        <div class="category-item"><span class="item-title">Как мы запустили новый высокопроизводительный кластер: от выбора железа до прода</span><span class="item-meta">Ноябрь 2025 &middot; Habr.com</span></div>
+        <div class="category-item"><span class="item-title">AMD RDNA 4 против NVIDIA: новый виток конкуренции</span><span class="item-meta">Август 2025 &middot; Habr.com</span></div>
+        <div class="category-item"><span class="item-title">Уроки свежих кибератак: принцип резервного копирования 3-2-1</span><span class="item-meta">2025 &middot; Habr.com</span></div>
+        <div class="category-item"><span class="item-title">Аренда облака за рубежом в 2026 году: 5 провайдеров с оплатой в рублях</span><span class="item-meta">2026 &middot; Tproger</span></div>
+        <div class="category-item"><span class="item-title">Как правильно выбрать процессоры под разные облачные сегменты</span><span class="item-meta">2025 &middot; Habr.com</span></div>
+        <div class="category-item"><span class="item-title">Российские серверы для искусственного интеллекта: что изменилось и как выбирать</span><span class="item-meta">2025 &middot; ITGLOBAL.COM Blog</span></div>
+        <div class="category-item"><span class="item-title">Малые числа, большие возможности: Роль плавающей запятой в ИИ</span><span class="item-meta">2025 &middot; Habr.com</span></div>
+        <div class="category-item"><span class="item-title">Обзор сервера ITPOD-SY4108G-D12R-G4: мощная платформа для AI/ML вычислений</span><span class="item-meta">2025 &middot; Habr.com</span></div>
+        <div class="category-item"><span class="item-title">Китайские GPU против NVIDIA</span><span class="item-meta">2025 &middot; Habr.com</span></div>
+        <div class="category-item"><span class="item-title">Олег Арсеньев раскрыл практический подход к международной экспансии в IT</span><span class="item-meta">2026 &middot; Computerra</span></div>
+      </div>
+      <button class="expand-btn" data-target="articles-works"><span class="arrow">&#9660;</span> Показать ещё</button>
+    </div>
+
+    <!-- Пресс-релизы -->
+    <div class="category-section">
+      <h2>Пресс-релизы</h2>
+      <div class="category-works collapsed" id="press-works">
+        <div class="category-item"><span class="item-title">GPU-инфраструктура ITGLOBAL.COM ускорила 3D-визуализацию архитектурной студии в 8 раз</span><span class="item-meta">Февраль 2026 &middot; CNews</span></div>
+        <div class="category-item"><span class="item-title">Облачный провайдер ITGLOBAL.COM увеличил вычислительные мощности GPU в России и Казахстане почти в 3 раза</span><span class="item-meta">Декабрь 2025 &middot; CNews</span></div>
+        <div class="category-item"><span class="item-title">ITGLOBAL.COM запустил платформу AI Cloud для интеграции ИИ-сервисов в корпоративные процессы</span><span class="item-meta">Ноябрь 2025 &middot; CNews</span></div>
+        <div class="category-item"><span class="item-title">ITGLOBAL.COM получила статус Approved Partner NetApp в США</span><span class="item-meta">Январь 2025 &middot; Новости IT-канала</span></div>
+        <div class="category-item"><span class="item-title">Корпорация ITG подвела итоги направления системной интеграции за 2025 год</span><span class="item-meta">Февраль 2026 &middot; CNews</span></div>
+        <div class="category-item"><span class="item-title">ITGLOBAL.COM зафиксировал повышенный спрос на графические ускорители NVIDIA RTX Pro 6000 Blackwell Server Edition</span><span class="item-meta">2026 &middot; IT-World</span></div>
+        <div class="category-item"><span class="item-title">Облачный провайдер корпорации ITG запустил первую площадку в Китае на базе дата-центра SeaArea Shenzhen</span><span class="item-meta">Январь 2026 &middot; CNews</span></div>
+        <div class="category-item"><span class="item-title">GPU-инфраструктура ITGLOBAL.COM помогла снизить количество инцидентов безопасности на производстве промышленной компании</span><span class="item-meta">Декабрь 2025 &middot; CNews</span></div>
+        <div class="category-item"><span class="item-title">ITGLOBAL.COM запустил услугу по защите данных ИТ-инфраструктуры от программ-вымогателей</span><span class="item-meta">2025 &middot; ITGLOBAL.COM News</span></div>
+        <div class="category-item"><span class="item-title">ITGLOBAL.COM и «ДатаРу Облако» объявили о стратегическом партнерстве</span><span class="item-meta">Декабрь 2025 &middot; CNews</span></div>
+        <div class="category-item"><span class="item-title">ITGLOBAL.COM назвала 8 барьеров выхода российских ИТ-продуктов на зарубежные рынки</span><span class="item-meta">2025 &middot; ITGLOBAL.COM News</span></div>
+        <div class="category-item"><span class="item-title">Компания SPORA увеличила производительность 1С на 30% после миграции в облако ITGLOBAL.COM</span><span class="item-meta">2025 &middot; ITGLOBAL.COM News</span></div>
+        <div class="category-item"><span class="item-title">ITGLOBAL.COM и DataSpace заключили стратегическое партнерство</span><span class="item-meta">Сентябрь 2025 &middot; CNews</span></div>
+        <div class="category-item"><span class="item-title">ITGLOBAL.COM запустил аренду графических ускорителей NVIDIA RTX PRO 6000 Blackwell Server Edition</span><span class="item-meta">Октябрь 2025 &middot; CNews</span></div>
+        <div class="category-item"><span class="item-title">GPU-инфраструктура ITGLOBAL.COM стала технологической основой для ИИ-проекта «Биржи грузоперевозок Ati.su»</span><span class="item-meta">Октябрь 2025 &middot; CNews</span></div>
+        <div class="category-item"><span class="item-title">ITGLOBAL.COM обеспечил защищённое хранение персональных данных для сети отелей Muse от Kravt h&amp;h</span><span class="item-meta">Октябрь 2025 &middot; CNews</span></div>
+        <div class="category-item"><span class="item-title">ITGLOBAL.COM зафиксировал 20% рост запросов на услугу Managed VMware</span><span class="item-meta">Октябрь 2025 &middot; CNews</span></div>
+        <div class="category-item"><span class="item-title">ITGLOBAL.COM обновил кластер облачной инфраструктуры для работы с 1С</span><span class="item-meta">2025 &middot; ITGLOBAL.COM News</span></div>
+        <div class="category-item"><span class="item-title">ITGLOBAL.COM удвоил количество стоек в московском дата-центре</span><span class="item-meta">Сентябрь 2025 &middot; CNews</span></div>
+        <div class="category-item"><span class="item-title">ITGLOBAL.COM обеспечил защиту данных ключевым клиентам от кибератак</span><span class="item-meta">2025 &middot; ITGLOBAL.COM News</span></div>
+        <div class="category-item"><span class="item-title">ITGLOBAL.COM предложит систему технического учёта «СДИ Базис» своим клиентам</span><span class="item-meta">2025 &middot; ITGLOBAL.COM News</span></div>
+        <div class="category-item"><span class="item-title">ITGLOBAL.COM запустит облачные сегменты на процессорах Intel Xeon Gold 5-го поколения</span><span class="item-meta">2025 &middot; ITGLOBAL.COM News</span></div>
+        <div class="category-item"><span class="item-title">ITGLOBAL.COM расширяет линейку серверов ITPOD поддержкой 8 GPU для задач искусственного интеллекта</span><span class="item-meta">Август 2025 &middot; CNews</span></div>
+        <div class="category-item"><span class="item-title">ITGLOBAL.COM подвел итоги внедрения QLC NVMe SSD в облачную инфраструктуру</span><span class="item-meta">Август 2025 &middot; CNews</span></div>
+        <div class="category-item"><span class="item-title">«ФКМ Лизинг» перевел ключевые ИТ-системы в приватное облако ITGLOBAL.COM</span><span class="item-meta">Август 2025 &middot; CNews</span></div>
+        <div class="category-item"><span class="item-title">Передовые ускорители Nvidia H200 теперь доступны для аренды в ITGLOBAL.COM</span><span class="item-meta">Июль 2025 &middot; CNews</span></div>
+        <div class="category-item"><span class="item-title">ITGLOBAL.COM расширил ИТ-инфраструктуру «АльфаСтрахование» на базе систем хранения NetApp</span><span class="item-meta">Июнь 2025 &middot; CNews</span></div>
+        <div class="category-item"><span class="item-title">Партнёрские программы ITGLOBAL.COM помогут ИТ-компаниям выйти на мировой рынок и поддержат развитие ИИ-продуктов</span><span class="item-meta">2025 &middot; Computerra</span></div>
+        <div class="category-item"><span class="item-title">ITGLOBAL.COM и LINCORE.KZ стали партнёрами по «облакам» в Казахстане</span><span class="item-meta">2025 &middot; ITGLOBAL.COM News</span></div>
+      </div>
+      <button class="expand-btn" data-target="press-works"><span class="arrow">&#9660;</span> Показать ещё</button>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <section>
+    <p class="section-label">Контакты</p>
+    <div class="contacts-list">
+      <a href="mailto:simeon026.business@gmail.com" class="contact-link">&#9993; simeon026.business@gmail.com</a>
+      <a href="https://t.me/speadmoune" class="contact-link">&#10004; Telegram</a>
+      <a href="https://wa.me/" class="contact-link">&#128172; WhatsApp</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Симеон Гупало</p>
+  </footer>
+
+</div>
+
+<script>
+  document.querySelectorAll('.expand-btn').forEach(function(btn) {
+    var targetId = btn.dataset.target;
+    var container = document.getElementById(targetId);
+    if (!container) return;
+    var items = container.querySelectorAll('.category-item');
+    if (items.length <= 4) { btn.style.display = 'none'; return; }
+    btn.addEventListener('click', function() {
+      var isCollapsed = container.classList.contains('collapsed');
+      if (isCollapsed) {
+        container.classList.remove('collapsed');
+        btn.classList.add('expanded');
+        btn.innerHTML = '<span class="arrow">&#9660;</span> Свернуть';
+      } else {
+        container.classList.add('collapsed');
+        btn.classList.remove('expanded');
+        btn.innerHTML = '<span class="arrow">&#9660;</span> Показать ещё';
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
