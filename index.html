@@ -119,6 +119,9 @@
             border-bottom: 1px solid var(--border);
             transition: all 0.3s ease;
             cursor: pointer;
+            display: block;
+            text-decoration: none;
+            color: inherit;
         }
 
         .work-item:hover {
@@ -192,6 +195,9 @@
             background: #fafafa;
             border-left: 3px solid var(--accent);
             transition: all 0.3s ease;
+            display: block;
+            text-decoration: none;
+            color: inherit;
         }
 
         .category-item:hover {
@@ -209,6 +215,40 @@
         .category-item-meta {
             font-size: 13px;
             color: var(--secondary);
+        }
+
+        /* Expand / Collapse */
+        .expand-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 24px;
+            padding: 8px 16px;
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 40px;
+            font-size: 14px;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .expand-btn:hover {
+            background: var(--primary);
+            color: var(--bg);
+            border-color: var(--primary);
+        }
+
+        .expand-btn .arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .expand-btn.expanded .arrow {
+            transform: rotate(180deg);
+        }
+
+        .category-works.collapsed .category-item:nth-child(n+5) {
+            display: none;
         }
 
         /* Contact */
@@ -237,30 +277,6 @@
             background: var(--primary);
             color: var(--bg);
             border-color: var(--primary);
-        }
-
-        /* Instructions */
-        .edit-instructions {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 20px;
-            margin: 40px 0;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .edit-instructions h4 {
-            margin-bottom: 12px;
-            color: #856404;
-        }
-
-        .edit-instructions ul {
-            margin-left: 20px;
-        }
-
-        .edit-instructions li {
-            margin: 8px 0;
-            color: #856404;
         }
 
         /* Animations */
@@ -365,6 +381,16 @@
             <div class="section-title">Избранные работы</div>
             
             <div class="featured-works">
+                <!-- Press Release 1 -->
+                <a href="https://www.cnews.ru/news/line/2026-02-26_gpu-infrastruktura_itglobalcom" target="_blank" class="work-item">
+                    <div class="work-meta">
+                        <span class="work-type">Пресс-релиз</span>
+                        <span>Февраль 2026</span>
+                    </div>
+                    <div class="work-title">GPU-инфраструктура ITGLOBAL.COM ускорила 3D-визуализацию архитектурной студии в 8 раз</div>
+                    <div class="work-media">CNews</div>
+                </a>
+
                 <!-- Article 1 -->
                 <a href="https://itglobal.com/ru-ru/company/blog/rejting-i-sravnenie-service-desk-sistem-kak-vybrat-itsm-dlya-biznesa-v-rossii/" target="_blank" class="work-item">
                     <div class="work-meta">
@@ -376,32 +402,45 @@
                 </a>
 
                 <!-- Article 2 -->
-                <a href="https://itglobal.com/ru-ru/company/blog/obzor-sophgo-sc7-hp75-tpu-na-baze-arm-dlya-ii-s-uklonom-na-raspoznavanie-obrazov/" target="_blank" class="work-item">
-                    <div class="work-meta">
-                        <span class="work-type">Обзор</span>
-                        <span>2025</span>
-                    </div>
-                    <div class="work-title">Обзор Sophgo SC7-HP75: TPU на базе ARM для ИИ с уклоном на распознавание образов</div>
-                    <div class="work-media">ITGLOBAL.COM Blog</div>
-                </a>
-
-                <!-- Article 3 -->
-                <a href="https://stormwall.pro/resources/blog/izvestnye-hakerskie-gruppirovki" target="_blank" class="work-item">
+                <a href="https://habr.com/ru/companies/itglobalcom/articles/966218/" target="_blank" class="work-item">
                     <div class="work-meta">
                         <span class="work-type">Статья</span>
-                        <span>2024</span>
+                        <span>Ноябрь 2025</span>
                     </div>
-                    <div class="work-title">Известные хакерские группировки: как они работают и что им грозит</div>
-                    <div class="work-media">StormWall Blog</div>
+                    <div class="work-title">Как мы запустили новый высокопроизводительный кластер: от выбора железа до прода</div>
+                    <div class="work-media">Habr.com</div>
+                </a>
+
+                <!-- Interview -->
+                <a href="https://www.computerra.ru/333263/kak-rossijskomu-it-vyjti-na-globalnyj-rynok-prakticheskij-gajd-ot-teh-kto-uzhe-tam/" target="_blank" class="work-item">
+                    <div class="work-meta">
+                        <span class="work-type">Интервью</span>
+                        <span>2026</span>
+                    </div>
+                    <div class="work-title">Олег Арсеньев раскрыл практический подход к международной экспансии в IT</div>
+                    <div class="work-media">Computerra</div>
                 </a>
             </div>
 
             <!-- All works by category -->
             <div class="work-categories">
                 <!-- Articles -->
-                <div class="category">
+                <div class="category" id="category-articles">
                     <h3>Статьи</h3>
-                    <div class="category-works">
+                    <div class="category-works collapsed">
+                        <!-- Existing articles (10) -->
+                        <a href="https://itglobal.com/ru-ru/company/blog/rejting-i-sravnenie-service-desk-sistem-kak-vybrat-itsm-dlya-biznesa-v-rossii/" target="_blank" class="category-item">
+                            <div class="category-item-title">Рейтинг и сравнение Service Desk систем: как выбрать ITSM для бизнеса в России</div>
+                            <div class="category-item-meta">2025 • ITGLOBAL.COM Blog</div>
+                        </a>
+                        <a href="https://itglobal.com/ru-ru/company/blog/obzor-sophgo-sc7-hp75-tpu-na-baze-arm-dlya-ii-s-uklonom-na-raspoznavanie-obrazov/" target="_blank" class="category-item">
+                            <div class="category-item-title">Обзор SOPHGO SC7 HP75: TPU на базе ARM для ИИ с уклоном на распознавание образов</div>
+                            <div class="category-item-meta">2025 • ITGLOBAL.COM Blog</div>
+                        </a>
+                        <a href="https://stormwall.pro/resources/blog/izvestnye-hakerskie-gruppirovki" target="_blank" class="category-item">
+                            <div class="category-item-title">Известные хакерские группировки: как они работают и что им грозит</div>
+                            <div class="category-item-meta">2024 • StormWall Blog</div>
+                        </a>
                         <a href="https://itglobal.com/ru-ru/company/blog/chto-takoe-superkompyuter-princzip-raboty-primenenie-i-preimushhestva-arendy/" target="_blank" class="category-item">
                             <div class="category-item-title">Что такое суперкомпьютер: принцип работы, применение и преимущества аренды</div>
                             <div class="category-item-meta">2025 • ITGLOBAL.COM Blog</div>
@@ -426,30 +465,171 @@
                             <div class="category-item-title">AMD RDNA 4 против NVIDIA: новый виток конкуренции</div>
                             <div class="category-item-meta">Август 2025 • Habr.com</div>
                         </a>
+                        <a href="https://habr.com/ru/companies/itglobalcom/articles/959088/" target="_blank" class="category-item">
+                            <div class="category-item-title">Уроки свежих кибератак: принцип резервного копирования 3-2-1</div>
+                            <div class="category-item-meta">2025 • Habr.com</div>
+                        </a>
+                        <!-- New articles from Excel (7) -->
+                        <a href="https://tproger.ru/articles/arenda-oblaka-za-rubezhom-v-2026-godu--5-provajderov-s-oplatoj-v-rublyah" target="_blank" class="category-item">
+                            <div class="category-item-title">Аренда облака за рубежом в 2026 году: 5 провайдеров с оплатой в рублях</div>
+                            <div class="category-item-meta">2026 • Tproger</div>
+                        </a>
+                        <a href="https://habr.com/ru/companies/itglobalcom/articles/962218/" target="_blank" class="category-item">
+                            <div class="category-item-title">Как правильно выбрать процессоры под разные облачные сегменты</div>
+                            <div class="category-item-meta">2025 • Habr.com</div>
+                        </a>
+                        <a href="https://itglobal.com/ru-ru/company/blog/rossijskie-servery-dlya-iskusstvennogo-intellekta-chto-izmenilos-i-kak-vybirat/" target="_blank" class="category-item">
+                            <div class="category-item-title">Российские серверы для искусственного интеллекта: что изменилось и как выбирать</div>
+                            <div class="category-item-meta">2025 • ITGLOBAL.COM Blog</div>
+                        </a>
+                        <a href="https://habr.com/ru/companies/itglobalcom/articles/934910/" target="_blank" class="category-item">
+                            <div class="category-item-title">Малые числа, большие возможности: Роль плавающей запятой в ИИ</div>
+                            <div class="category-item-meta">2025 • Habr.com</div>
+                        </a>
+                        <a href="https://habr.com/ru/companies/itglobalcom/articles/928716/" target="_blank" class="category-item">
+                            <div class="category-item-title">Обзор сервера ITPOD-SY4108G-D12R-G4: мощная платформа для AI/ML вычислений</div>
+                            <div class="category-item-meta">2025 • Habr.com</div>
+                        </a>
+                        <a href="https://habr.com/ru/companies/itglobalcom/articles/930054/" target="_blank" class="category-item">
+                            <div class="category-item-title">Китайские GPU против NVIDIA</div>
+                            <div class="category-item-meta">2025 • Habr.com</div>
+                        </a>
+                        <a href="https://www.computerra.ru/333263/kak-rossijskomu-it-vyjti-na-globalnyj-rynok-prakticheskij-gajd-ot-teh-kto-uzhe-tam/" target="_blank" class="category-item">
+                            <div class="category-item-title">Олег Арсеньев раскрыл практический подход к международной экспансии в IT</div>
+                            <div class="category-item-meta">2026 • Computerra</div>
+                        </a>
                     </div>
+                    <button class="expand-btn" data-target="category-articles">
+                        <span class="arrow">▼</span> Показать ещё
+                    </button>
                 </div>
 
                 <!-- Press Releases -->
-                <div class="category">
+                <div class="category" id="category-press">
                     <h3>Пресс-релизы</h3>
-                    <div class="category-works">
+                    <div class="category-works collapsed">
+                        <!-- Existing press releases (4) -->
                         <a href="https://www.cnews.ru/news/line/2026-02-26_gpu-infrastruktura_itglobalcom" target="_blank" class="category-item">
-                            <div class="category-item-title">GPU-инфраструктура Itglobal.com ускорила 3D-визуализацию архитектурной студии в 8 раз</div>
+                            <div class="category-item-title">GPU-инфраструктура ITGLOBAL.COM ускорила 3D-визуализацию архитектурной студии в 8 раз</div>
                             <div class="category-item-meta">Февраль 2026 • CNews</div>
                         </a>
                         <a href="https://www.cnews.ru/news/line/2025-12-22_oblachnyj_provajder_itglobal" target="_blank" class="category-item">
-                            <div class="category-item-title">Облачный провайдер Itglobal.com увеличил вычислительные мощности GPU в России и Казахстане почти в 3 раза</div>
+                            <div class="category-item-title">Облачный провайдер ITGLOBAL.COM увеличил вычислительные мощности GPU в России и Казахстане почти в 3 раза</div>
                             <div class="category-item-meta">Декабрь 2025 • CNews</div>
                         </a>
                         <a href="https://www.cnews.ru/news/line/2025-11-01_itglobalcom_zapustil_platformu" target="_blank" class="category-item">
-                            <div class="category-item-title">ITGlobal.com запустил платформу AI Cloud для интеграции ИИ-сервисов в корпоративные процессы</div>
+                            <div class="category-item-title">ITGLOBAL.COM запустил платформу AI Cloud для интеграции ИИ-сервисов в корпоративные процессы</div>
                             <div class="category-item-meta">Ноябрь 2025 • CNews</div>
                         </a>
                         <a href="https://www.novostiitkanala.ru/news/detail.php?ID=182315" target="_blank" class="category-item">
                             <div class="category-item-title">ITGLOBAL.COM получила статус Approved Partner NetApp в США</div>
                             <div class="category-item-meta">Январь 2025 • Новости IT-канала</div>
                         </a>
+                        <!-- New press releases from Excel (20+) -->
+                        <a href="https://www.cnews.ru/news/line/2026-02-04_korporatsiya_itg_podvela_itogi" target="_blank" class="category-item">
+                            <div class="category-item-title">Корпорация ITG подвела итоги направления системной интеграции за 2025 год</div>
+                            <div class="category-item-meta">Февраль 2026 • CNews</div>
+                        </a>
+                        <a href="https://www.it-world.ru/news-company/chvtqhsb05wssokko00gcsoo0c8ocwo.html" target="_blank" class="category-item">
+                            <div class="category-item-title">ITGLOBAL.COM зафиксировал повышенный спрос на графические ускорители NVIDIA RTX Pro 6000 Blackwell Server Edition</div>
+                            <div class="category-item-meta">2026 • IT-World</div>
+                        </a>
+                        <a href="https://www.cnews.ru/news/line/2026-01-23_oblachnyj_provajder_korporatsii" target="_blank" class="category-item">
+                            <div class="category-item-title">Облачный провайдер корпорации ITG запустил первую площадку в Китае на базе дата-центра SeaArea Shenzhen</div>
+                            <div class="category-item-meta">Январь 2026 • CNews</div>
+                        </a>
+                        <a href="https://www.cnews.ru/news/line/2025-12-19_gpu-infrastruktura_itglobalcom" target="_blank" class="category-item">
+                            <div class="category-item-title">GPU-инфраструктура ITGLOBAL.COM помогла снизить количество инцидентов безопасности на производстве промышленной компании</div>
+                            <div class="category-item-meta">Декабрь 2025 • CNews</div>
+                        </a>
+                        <a href="https://itglobal.com/ru-ru/company/news/itglobal-com-zapustil-uslugu-po-zashhite-dannyh-it-infrastruktury-ot-programm-vymogatelej/" target="_blank" class="category-item">
+                            <div class="category-item-title">ITGLOBAL.COM запустил услугу по защите данных ИТ-инфраструктуры от программ-вымогателей</div>
+                            <div class="category-item-meta">2025 • ITGLOBAL.COM News</div>
+                        </a>
+                        <a href="https://www.cnews.ru/news/line/2025-12-05_itglobalcom_i_dataru_oblako" target="_blank" class="category-item">
+                            <div class="category-item-title">ITGLOBAL.COM и «ДатаРу Облако» объявили о стратегическом партнерстве</div>
+                            <div class="category-item-meta">Декабрь 2025 • CNews</div>
+                        </a>
+                        <a href="https://itglobal.com/ru-ru/company/news/itglobal-com-8-barerov-eksporta-rossijskih-it-produktov/" target="_blank" class="category-item">
+                            <div class="category-item-title">ITGLOBAL.COM назвала 8 барьеров выхода российских ИТ-продуктов на зарубежные рынки</div>
+                            <div class="category-item-meta">2025 • ITGLOBAL.COM News</div>
+                        </a>
+                        <a href="https://itglobal.com/ru-ru/company/news/kompaniya-spora-uvelichila-proizvoditelnost-1s-na-30-posle-migraczii-v-oblako-itglobal-com/" target="_blank" class="category-item">
+                            <div class="category-item-title">Компания SPORA увеличила производительность 1С на 30% после миграции в облако ITGLOBAL.COM</div>
+                            <div class="category-item-meta">2025 • ITGLOBAL.COM News</div>
+                        </a>
+                        <a href="https://www.cnews.ru/news/line/2025-09-30_itglobalcom_i_dataspace_zaklyuchili" target="_blank" class="category-item">
+                            <div class="category-item-title">ITGLOBAL.COM и DataSpace заключили стратегическое партнерство</div>
+                            <div class="category-item-meta">Сентябрь 2025 • CNews</div>
+                        </a>
+                        <a href="https://www.cnews.ru/news/line/2025-10-03_itglobalcom_zapustil_arendu_graficheskih" target="_blank" class="category-item">
+                            <div class="category-item-title">ITGLOBAL.COM запустил аренду графических ускорителей NVIDIA RTX PRO 6000 Blackwell Server Edition</div>
+                            <div class="category-item-meta">Октябрь 2025 • CNews</div>
+                        </a>
+                        <a href="https://www.cnews.ru/news/line/2025-10-07_gpu-infrastruktura_itglobalcom" target="_blank" class="category-item">
+                            <div class="category-item-title">GPU-инфраструктура ITGLOBAL.COM стала технологической основой для ИИ-проекта «Биржи грузоперевозок Ati.su»</div>
+                            <div class="category-item-meta">Октябрь 2025 • CNews</div>
+                        </a>
+                        <a href="https://www.cnews.ru/news/line/2025-10-17_itglobalcom_obespechil_zashchishchennoe" target="_blank" class="category-item">
+                            <div class="category-item-title">ITGLOBAL.COM обеспечил защищенное хранение персональных данных для сети отелей Muse от Kravt h&h</div>
+                            <div class="category-item-meta">Октябрь 2025 • CNews</div>
+                        </a>
+                        <a href="https://www.cnews.ru/news/line/2025-10-15_itglobalcom_zafiksiroval_20_rost" target="_blank" class="category-item">
+                            <div class="category-item-title">ITGLOBAL.COM зафиксировал 20% рост запросов на услугу Managed VMware</div>
+                            <div class="category-item-meta">Октябрь 2025 • CNews</div>
+                        </a>
+                        <a href="https://itglobal.com/ru-ru/company/news/itglobal-com-moderniziroval-klaster-oblachnoj-infrastruktury-dlya-raboty-s-1s/" target="_blank" class="category-item">
+                            <div class="category-item-title">ITGLOBAL.COM обновил кластер облачной инфраструктуры для работы с 1С</div>
+                            <div class="category-item-meta">2025 • ITGLOBAL.COM News</div>
+                        </a>
+                        <a href="https://www.cnews.ru/news/line/2025-09-17_itglobalcom_udvoil_kolichestvo" target="_blank" class="category-item">
+                            <div class="category-item-title">ITGLOBAL.COM удвоил количество стоек в московском дата-центре</div>
+                            <div class="category-item-meta">Сентябрь 2025 • CNews</div>
+                        </a>
+                        <a href="https://itglobal.com/ru-ru/company/news/itglobal-com-obespechil-zashhitu-dannyh-klyuchevym-klientam-ot-kiberatak/" target="_blank" class="category-item">
+                            <div class="category-item-title">ITGLOBAL.COM обеспечил защиту данных ключевым клиентам от кибератак</div>
+                            <div class="category-item-meta">2025 • ITGLOBAL.COM News</div>
+                        </a>
+                        <a href="https://itglobal.com/ru-ru/company/news/itglobal-com-predlozhit-sistemu-tehnicheskogo-ucheta-sdi-bazis-svoim-klientam/" target="_blank" class="category-item">
+                            <div class="category-item-title">ITGLOBAL.COM предложит систему технического учета «СДИ Базис» своим клиентам</div>
+                            <div class="category-item-meta">2025 • ITGLOBAL.COM News</div>
+                        </a>
+                        <a href="https://itglobal.com/ru-ru/company/news/itglobal-com-zapustit-oblachnye-segmenty-na-proczessorah-intel-xeon-gold-5-go-pokoleniya/" target="_blank" class="category-item">
+                            <div class="category-item-title">ITGLOBAL.COM запустит облачные сегменты на процессорах Intel Xeon Gold 5-го поколения</div>
+                            <div class="category-item-meta">2025 • ITGLOBAL.COM News</div>
+                        </a>
+                        <a href="https://www.cnews.ru/news/line/2025-08-07_itglobalcom_rasshiryaet_linejku" target="_blank" class="category-item">
+                            <div class="category-item-title">ITGLOBAL.COM расширяет линейку серверов ITPOD поддержкой 8 GPU для задач искусственного интеллекта</div>
+                            <div class="category-item-meta">Август 2025 • CNews</div>
+                        </a>
+                        <a href="https://www.cnews.ru/news/line/2025-08-20_itglobalcom_podvodit_itogi_vnedreniya" target="_blank" class="category-item">
+                            <div class="category-item-title">ITGLOBAL.COM подвел итоги внедрения QLC NVMe SSD в облачную инфраструктуру</div>
+                            <div class="category-item-meta">Август 2025 • CNews</div>
+                        </a>
+                        <a href="https://www.cnews.ru/news/line/2025-08-14_fkm_lizing_perevel_klyuchevye" target="_blank" class="category-item">
+                            <div class="category-item-title">«ФКМ Лизинг» перевел ключевые ИТ-системы в приватное облако ITGLOBAL.COM</div>
+                            <div class="category-item-meta">Август 2025 • CNews</div>
+                        </a>
+                        <a href="https://www.cnews.ru/news/line/2025-07-21_peredovye_uskoriteli_nvidia" target="_blank" class="category-item">
+                            <div class="category-item-title">Передовые ускорители Nvidia H200 теперь доступны для аренды в ITGLOBAL.COM</div>
+                            <div class="category-item-meta">Июль 2025 • CNews</div>
+                        </a>
+                        <a href="https://www.cnews.ru/news/line/2025-06-27_itglobalcom_rasshiril_it-infrastrukturu" target="_blank" class="category-item">
+                            <div class="category-item-title">ITGLOBAL.COM расширил ИТ-инфраструктуру «АльфаСтрахование» на базе систем хранения NetApp</div>
+                            <div class="category-item-meta">Июнь 2025 • CNews</div>
+                        </a>
+                        <a href="https://www.computerra.ru/314855/partnerskie-programmy-itglobal-com-pomogut-it-kompaniyam-vyjti-na-mirovoj-rynok-i-podderzhat-razvitie-ii-produktov/" target="_blank" class="category-item">
+                            <div class="category-item-title">Партнерские программы ITGLOBAL.COM помогут ИТ-компаниям выйти на мировой рынок и поддержат развитие ИИ-продуктов</div>
+                            <div class="category-item-meta">2025 • Computerra</div>
+                        </a>
+                        <a href="https://itglobal.com/ru-ru/company/news/itglobal-com-i-lincore-kz-obyavili-o-tehnologicheskom-partnerstve-dlya-predostavleniya-oblachnyh-servisov-v-kazahstane/" target="_blank" class="category-item">
+                            <div class="category-item-title">ITGLOBAL.COM и LINCORE.KZ стали партнерами по «облакам» в Казахстане</div>
+                            <div class="category-item-meta">2025 • ITGLOBAL.COM News</div>
+                        </a>
                     </div>
+                    <button class="expand-btn" data-target="category-press">
+                        <span class="arrow">▼</span> Показать ещё
+                    </button>
                 </div>
             </div>
         </section>
@@ -458,14 +638,15 @@
         <section class="contact">
             <div class="section-title">Контакты</div>
             <div class="contact-links">
-                <a href="/cdn-cgi/l/email-protection#186b71757d7776282a2e587f75797174367b7775" class="contact-link">Email</a>
+                <a href="/cdn-cgi/l/email-protection#13607a7e767c7d21232753747e727a7f3d707c7e" class="contact-link">Email</a>
                 <a href="https://t.me/SpeadMoune" class="contact-link">Telegram</a>
                 <a href="https://wa.me/79117913316" class="contact-link">WhatsApp</a>
             </div>
         </section>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script>
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -478,3 +659,35 @@
                 }
             });
         });
+
+        // Expand / collapse functionality
+        document.querySelectorAll('.expand-btn').forEach(btn => {
+            const targetId = btn.dataset.target;
+            const category = document.getElementById(targetId);
+            if (!category) return;
+
+            const worksContainer = category.querySelector('.category-works');
+            const items = worksContainer.querySelectorAll('.category-item');
+
+            // Only show expand if more than 4 items
+            if (items.length <= 4) {
+                btn.style.display = 'none';
+            } else {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const isExpanded = worksContainer.classList.contains('collapsed');
+                    if (isExpanded) {
+                        worksContainer.classList.remove('collapsed');
+                        btn.classList.add('expanded');
+                        btn.innerHTML = '<span class="arrow">▼</span> Свернуть';
+                    } else {
+                        worksContainer.classList.add('collapsed');
+                        btn.classList.remove('expanded');
+                        btn.innerHTML = '<span class="arrow">▼</span> Показать ещё';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
